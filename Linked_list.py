@@ -309,6 +309,37 @@ class LinkedList:
             self.head = last
             second_last.next = None
 
+    def sum_two_list(self, llist):
+        p = self.head
+        q = llist.head
+
+        sum_list = LinkedList()
+
+        carry = 0
+        while p or q:
+            if not p:
+                i = 0
+            else:
+                i = p.data
+            if not q:
+                j = 0
+            else:
+                j = q.data
+            s = i + j + carry
+            if s >= 10:
+                carry = 1
+                remainder = s % 10
+                sum_list.append(remainder)
+            else:
+                carry = 0
+                sum_list.append(s)
+
+            if p:
+                p = p.next
+            if q:
+                q = q.next
+        sum_list.print_list()
+
 
 llist = LinkedList()
 llist.append("A")
@@ -322,19 +353,43 @@ llist.append("E")
 llist.print_list()
 
 # print the length of the linked list
+print('\n')
 print("Length of the linked list is: ", llist.len_iterative())
 
 # count the number of occurences of a node
+print('\n')
 print("Number of occurences of a node is: ", llist.count_occurences_iterative("A"))
 
 # print the nth node from the end
 print("The nth node from the end is: ", llist.print_nth_from_last(2, 2))
 
 # rotate the linked list
+print('\n')
+print("The linked list after rotation is: ")
 llist.rotate(3)
 llist.print_list()
 
 # move the tail to the head
+print('\n')
 print("Move tail to head:")
 llist.move_tail_to_head()
 llist.print_list()
+
+#sum two linked lists
+print('\n')
+print("Sum two linked lists:")
+llist1 = LinkedList()
+llist2 = LinkedList()
+llist1.append(1)
+llist1.append(2)
+llist1.append(3)
+llist2.append(4)
+llist2.append(5)
+llist2.append(6)
+
+print("First linked list:")
+llist1.print_list()
+print("Second linked list:")
+llist2.print_list()
+print("Sum of the two linked lists:")
+llist1.sum_two_list(llist2)
