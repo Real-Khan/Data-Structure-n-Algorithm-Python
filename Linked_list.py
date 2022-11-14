@@ -258,12 +258,83 @@ class LinkedList:
                 return p.data
             else:
                 return None
+    
+    def count_occurences_iterative(self, data):
+        count = 0
+        cur = self.head
+        while cur:
+            if cur.data == data:
+                count += 1
+            cur = cur.next
+        return count
+
+    def count_occurences_recursive(self, node, data):
+        if not node:
+            return 0
+        if node.data == data:
+            return 1 + self.count_occurences_recursive(node.next, data)
+        else:
+            return self.count_occurences_recursive(node.next, data)
+
+    def rotate(self, k):
+        if self.head and self.head.next:
+            p = self.head
+            q = self.head
+            prev = None
+            count = 0
+
+            while p and count < k:
+                prev = p
+                p = p.next
+                q = q.next
+                count += 1
+            p = prev
+            while q:
+                prev = q
+                q = q.next
+            q = prev
+
+            q.next = self.head
+            self.head = p.next
+            p.next = None
+
+    def move_tail_to_head(self):
+        if self.head and self.head.next:
+            last = self.head
+            second_last = None
+            while last.next:
+                second_last = last
+                last = last.next
+            last.next = self.head
+            self.head = last
+            second_last.next = None
+
 
 llist = LinkedList()
 llist.append("A")
 llist.append("B")
 llist.append("C")
 llist.append("D")
+llist.append("E")
 
-print(llist.print_nth_from_last(4,1))
-print(llist.print_nth_from_last(4,2))
+
+# print the linked list
+llist.print_list()
+
+# print the length of the linked list
+print("Length of the linked list is: ", llist.len_iterative())
+
+# count the number of occurences of a node
+print("Number of occurences of a node is: ", llist.count_occurences_iterative("A"))
+
+# print the nth node from the end
+print("The nth node from the end is: ", llist.print_nth_from_last(2, 2))
+
+# rotate the linked list
+llist.rotate(3)
+llist.print_list()
+
+# move the tail to the head
+print("Move tail to head:")
+llist.move_tail_to_head()
+llist.print_list()
